@@ -33,10 +33,10 @@ type Report struct {
 	MemoData                         string `json:"memo_data"`
 	MemoType                         string `json:"memo_type"`
 	ReportVerificationPublicKeyBytes string `json:"report_verification_public_key_bytes"`
-	SigatureBytes                    string `json:"sigature_bytes"`
+	SignatureBytes                   string `json:"signature_bytes"`
 	StartIndex                       string `json:"start_index"`
 	TemporaryContactKeyBytes         string `json:"temporary_contact_key_bytes"`
-	Timestamp                        string
+	Timestamp                        string `json:"timestamp"`
 }
 
 // NewContext constructs a new Context from an http.ResponseWriter and an

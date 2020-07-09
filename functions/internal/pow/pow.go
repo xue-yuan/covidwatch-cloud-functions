@@ -164,7 +164,8 @@ func StoreReport(report util.Report, ctx *util.Context) {
 	errUUID := new(error)
 	u1 := uuid.Must(uuid.NewV4(), *errUUID)
 	fmt.Println(u1)
-	_, err := ctx.FirestoreClient().Collection(reportCollection).Doc(u1.String()).Create(ctx, report)
+	sb, _ := json.Marshal(report)
+	_, err := ctx.FirestoreClient().Collection(reportCollection).Doc(u1.String()).Create(ctx, sb)
 	if err != nil {
 
 	}

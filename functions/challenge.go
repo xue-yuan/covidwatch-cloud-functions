@@ -4,7 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"strconv"
 	"strings"
+	"time"
 
 	"upload-token.functions/internal/pow"
 	"upload-token.functions/internal/util"
@@ -42,7 +44,9 @@ func submitReportHandler(ctx *util.Context) util.StatusError {
 	if err == nil {
 		fmt.Println(report)
 	}
-
+	timestamp := time.Now().Unix()
+	report.Timestamp = strconv.FormatInt(timestamp, 10)
 	pow.StoreReport(report, ctx)
+
 	return nil
 }

@@ -47,7 +47,8 @@ func submitReportHandler(ctx *util.Context) util.StatusError {
 	// 	fmt.Println(report)
 	// }
 	timestamp := time.Now().Unix()
-	report.Timestamp = strconv.FormatInt(timestamp, 10)
+	report.SetTimestamp(strconv.FormatInt(timestamp, 10))
+	// report.Timestamp = strconv.FormatInt(timestamp, 10)
 	pow.StoreReport(report, ctx)
 
 	return nil

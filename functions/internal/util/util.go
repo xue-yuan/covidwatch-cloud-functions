@@ -29,14 +29,14 @@ type Context struct {
 
 // Report is a shit thing
 type Report struct {
-	EndIndex                         string `json:"end_index"`
-	MemoData                         string `json:"memo_data"`
-	MemoType                         string `json:"memo_type"`
-	ReportVerificationPublicKeyBytes string `json:"report_verification_public_key_bytes"`
-	SignatureBytes                   string `json:"signature_bytes"`
-	StartIndex                       string `json:"start_index"`
-	TemporaryContactKeyBytes         string `json:"temporary_contact_key_bytes"`
-	Timestamp                        string `json:"timestamp"`
+	end_index                            string `json:"end_index"`
+	memo_data                            string `json:"memo_data"`
+	memo_type                            string `json:"memo_type"`
+	report_verification_public_key_bytes string `json:"report_verification_public_key_bytes"`
+	signature_bytes                      string `json:"signature_bytes"`
+	start_index                          string `json:"start_index"`
+	temporary_contact_key_bytes          string `json:"temporary_contact_key_bytes"`
+	timestamp                            string `json:"timestamp"`
 }
 
 // NewContext constructs a new Context from an http.ResponseWriter and an
@@ -59,6 +59,11 @@ func NewContext(w http.ResponseWriter, r *http.Request) (Context, StatusError) {
 	}
 
 	return Context{w, r, client, ctx}, nil
+}
+
+// SetTimestamp is useless
+func (r *Report) SetTimestamp(t string) {
+	r.timestamp = t
 }
 
 // HTTPRequest returns the *http.Request that was used to construct this

@@ -166,7 +166,7 @@ func StoreReport(report util.Report, ctx *util.Context) {
 	fmt.Println(u1)
 	sb, _ := json.Marshal(report)
 	fmt.Println(string(sb))
-	_, err := ctx.FirestoreClient().Collection(reportCollection).Doc(u1.String()).Create(ctx, sb)
+	_, err := ctx.FirestoreClient().Collection(reportCollection).Doc(u1.String()).Create(ctx, string(sb))
 	if err != nil {
 		fmt.Println(err)
 	}

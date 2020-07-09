@@ -2,6 +2,7 @@ package functions
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"strconv"
 	"time"
@@ -38,7 +39,7 @@ func submitReportHandler(ctx *util.Context) util.StatusError {
 	b, _ := ioutil.ReadAll(ctx.HTTPRequest().Body)
 
 	// var report2 util.Report
-
+	fmt.Println(b)
 	var report util.Report
 	json.Unmarshal(b, &report)
 
@@ -47,8 +48,8 @@ func submitReportHandler(ctx *util.Context) util.StatusError {
 	// 	fmt.Println(report)
 	// }
 	timestamp := time.Now().Unix()
-	report.SetTimestamp(strconv.FormatInt(timestamp, 10))
-	// report.Timestamp = strconv.FormatInt(timestamp, 10)
+	// report.SetTimestamp(strconv.FormatInt(timestamp, 10))
+	report.Timestamp = strconv.FormatInt(timestamp, 10)
 	pow.StoreReport(report, ctx)
 
 	return nil

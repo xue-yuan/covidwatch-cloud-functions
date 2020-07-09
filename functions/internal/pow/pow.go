@@ -164,8 +164,8 @@ func StoreReport(report util.Report, ctx *util.Context) {
 	errUUID := new(error)
 	u1 := uuid.Must(uuid.NewV4(), *errUUID)
 	fmt.Println(u1)
-	// sb, _ := json.Marshal(report)
-	fmt.Println(report)
+	sb, _ := json.Marshal(report)
+	fmt.Println(string(sb))
 	// fmt.Println(sb)
 
 	// _ := json.NewDecoder(strings.NewReader(string(b))).Decode(&report)

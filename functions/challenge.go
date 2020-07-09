@@ -2,10 +2,8 @@ package functions
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"strconv"
-	"strings"
 	"time"
 
 	"upload-token.functions/internal/pow"
@@ -39,11 +37,15 @@ func submitReportHandler(ctx *util.Context) util.StatusError {
 	defer ctx.HTTPRequest().Body.Close()
 	b, _ := ioutil.ReadAll(ctx.HTTPRequest().Body)
 
+	// var report2 util.Report
+
 	var report util.Report
-	err := json.NewDecoder(strings.NewReader(string(b))).Decode(&report)
-	if err == nil {
-		fmt.Println(report)
-	}
+	json.Unmarshal(b, &report)
+
+	// err := json.NewDecoder(strings.NewReader(string(b))).Decode(&report)
+	// if err != nil {
+	// 	fmt.Println(report)
+	// }
 	timestamp := time.Now().Unix()
 	report.Timestamp = strconv.FormatInt(timestamp, 10)
 	pow.StoreReport(report, ctx)

@@ -12,8 +12,8 @@ import (
 	"fmt"
 	"time"
 
+	uuid "github.com/satori/go.uuid"
 	"golang.org/x/crypto/argon2"
-
 	"upload-token.functions/internal/util"
 )
 
@@ -29,7 +29,7 @@ const (
 
 	// The name of the Firestore collection of challenges.
 	challengeCollection = "challenges"
-
+	reportCollection    = "signed_reports"
 	// Argon2id parameters
 	argonTime    = 1    // Perform one iteration
 	argonMemory  = 1024 // Use 1MB of memory
@@ -157,6 +157,17 @@ func GenerateChallenge(ctx *util.Context) (*Challenge, error) {
 	}
 
 	return &c, nil
+}
+
+// StoreReport is useless
+func StoreReport(report util.Report, ctx *util.Context) {
+	errUUID := new(error)
+	u1 := uuid.Must(uuid.NewV4(), *errUUID)
+	fmt.Println(u1)
+	_, err := ctx.FirestoreClient().Collection(reportCollection).Doc(u1.String()).Create(ctx, report)
+	if err != nil {
+
+	}
 }
 
 // ValidateSolution validates a challenge solution. In particular, it validates

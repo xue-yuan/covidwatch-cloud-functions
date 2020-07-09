@@ -9,8 +9,8 @@ import (
 	"io"
 	"net/http"
 	"os"
-	"strings"
 	"regexp"
+	"strings"
 
 	"cloud.google.com/go/firestore"
 	"google.golang.org/grpc/codes"
@@ -25,6 +25,18 @@ type Context struct {
 	client *firestore.Client
 
 	context.Context
+}
+
+// Report is a shit thing
+type Report struct {
+	EndIndex                         string `json:"end_index"`
+	MemoData                         string `json:"memo_data"`
+	MemoType                         string `json:"memo_type"`
+	ReportVerificationPublicKeyBytes string `json:"report_verification_public_key_bytes"`
+	SigatureBytes                    string `json:"sigature_bytes"`
+	StartIndex                       string `json:"start_index"`
+	TemporaryContactKeyBytes         string `json:"temporary_contact_key_bytes"`
+	Timestamp                        string
 }
 
 // NewContext constructs a new Context from an http.ResponseWriter and an
@@ -184,13 +196,13 @@ func ReadCryptoRandBytes(b []byte) {
 // newStatusError constructs a new statusError with the given code and error.
 // The given error will be used as the message returned by StatusError.Message.
 func newStatusError(code int, err error) statusError {
-    return statusError {
-        code: code,
+	return statusError{
+		code:  code,
 		error: err,
 		// Leave empty so that error.Error() will be used as the return value
 		// from Message.
-        message: "",
-    }
+		message: "",
+	}
 }
 
 // checkHTTPS retrieves the scheme from the X-Forwarded-Proto or RFC7239
@@ -205,8 +217,8 @@ var (
 	// De-facto standard header keys.
 	xForwardedProto = http.CanonicalHeaderKey("X-Forwarded-Proto")
 	forwarded       = http.CanonicalHeaderKey("Forwarded") // RFC7239
-	
-	protoRegex 		= regexp.MustCompile(`(?i)(?:proto=)(https|http)`)
+
+	protoRegex = regexp.MustCompile(`(?i)(?:proto=)(https|http)`)
 )
 
 func checkHTTPS(r *http.Request) StatusError {
@@ -267,6 +279,7 @@ func checkHTTPS(r *http.Request) StatusError {
 // It also suffixed with preload which is necessary for inclusion in most major web
 // browsers' HSTS preload lists, e.g. Chromium, Edge, & Firefox.
 var headerHSTS = http.CanonicalHeaderKey("Strict-Transport-Security")
+
 func addHSTS(w http.ResponseWriter) {
 	w.Header().Set(headerHSTS, "max-age=63072000; includeSubDomains; preload")
 }

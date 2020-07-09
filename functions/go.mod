@@ -8,6 +8,7 @@ require (
 	cloud.google.com/go/firestore v1.2.0
 	github.com/GoogleCloudPlatform/functions-framework-go v1.0.1
 	github.com/golang/protobuf v1.4.1 // indirect
+	github.com/satori/go.uuid v1.2.0
 	github.com/stretchr/testify v1.5.1
 	golang.org/x/crypto v0.0.0-20200429183012-4b2356b1ed79
 	golang.org/x/net v0.0.0-20200506145744-7e3656a0809f // indirect

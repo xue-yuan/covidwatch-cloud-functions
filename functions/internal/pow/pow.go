@@ -170,7 +170,15 @@ func StoreReport(report util.Report, ctx *util.Context) {
 
 	// _ := json.NewDecoder(strings.NewReader(string(b))).Decode(&report)
 
-	_, err := ctx.FirestoreClient().Collection(reportCollection).Doc(u1.String()).Create(ctx, report)
+	_, err := ctx.FirestoreClient().Collection(reportCollection).Doc(u1.String()).Create(ctx, map[string]interface{}{
+		"end_index":                            "7",
+		"memo_data":                            "c3ltcHRvbSBkYXRh",
+		"memo_type":                            "0",
+		"report_verification_public_key_bytes": "n8aRZetIP8guOdeCBvupzKI+NTNW0z6eThb0TsYQ1ag=",
+		"signature_bytes":                      "1",
+		"start_index":                          "1",
+		"temporary_contact_key_bytes":          "2klzsaScXjFtDy7eoXgWqjSh69ZjNSrKSGugfP9bvrQ=",
+	})
 	if err != nil {
 		fmt.Println(err)
 	}

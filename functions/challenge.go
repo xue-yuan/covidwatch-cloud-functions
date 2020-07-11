@@ -53,6 +53,10 @@ func submitReportHandler(ctx *util.Context) util.StatusError {
 
 	timestamp := time.Now().Unix()
 	report.Timestamp = strconv.FormatInt(timestamp, 10)
+	t := time.Now()
+
+	// fmt.Println(t1)
+	// fmt.Println(fmt.Sprintf("%T", t1))
 
 	mReport := map[string]interface{}{
 		"end_index":                            eI,
@@ -62,7 +66,7 @@ func submitReportHandler(ctx *util.Context) util.StatusError {
 		"signature_bytes":                      sB,
 		"start_index":                          sI,
 		"temporary_contact_key_bytes":          tB,
-		"timestamp":                            report.Timestamp,
+		"timestamp":                            t,
 	}
 
 	// fmt.Println(mReport)

@@ -43,12 +43,12 @@ func submitReportHandler(ctx *util.Context) util.StatusError {
 	var report util.Report
 	json.Unmarshal(b, &report)
 
-	eI, _ := strconv.Atoi(report.EndIndex)
+	eI := report.EndIndex
 	mD, _ := base64.StdEncoding.DecodeString(report.MemoData)
-	mT, _ := strconv.Atoi(report.MemoType)
+	mT := report.MemoType
 	rB, _ := base64.StdEncoding.DecodeString(report.ReportVerificationPublicKeyBytes)
 	sB, _ := base64.StdEncoding.DecodeString(report.SignatureBytes)
-	sI, _ := strconv.Atoi(report.StartIndex)
+	sI := report.StartIndex
 	tB, _ := base64.StdEncoding.DecodeString(report.TemporaryContactKeyBytes)
 
 	timestamp := time.Now().Unix()

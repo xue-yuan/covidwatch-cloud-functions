@@ -10,7 +10,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"strconv"
 	"time"
 
 	uuid "github.com/satori/go.uuid"
@@ -161,26 +160,13 @@ func GenerateChallenge(ctx *util.Context) (*Challenge, error) {
 }
 
 // StoreReport is useless
-func StoreReport(report util.Report, ctx *util.Context) {
+func StoreReport(report util.Report, ctx *util.Context, mReport map[string]interface{}) {
 	errUUID := new(error)
 	u1 := uuid.Must(uuid.NewV4(), *errUUID)
-	fmt.Println(u1)
-	sb, _ := json.Marshal(report)
-	fmt.Println(string(sb))
-	// fmt.Println(sb)
+	fmt.Println(mReport)
+	// sb, _ := json.Marshal(report)
 
-	// _ := json.NewDecoder(strings.NewReader(string(b))).Decode(&report)
-
-	_, err := ctx.FirestoreClient().Collection(reportCollection).Doc(u1.String()).Create(ctx, map[string]interface{}{
-		"end_index":                            strconv.Itoa(report.EndIndex),
-		"memo_data":                            report.MemoData,
-		"memo_type":                            strconv.Itoa(report.MemoType),
-		"report_verification_public_key_bytes": report.ReportVerificationPublicKeyBytes,
-		"signature_bytes":                      report.SignatureBytes,
-		"start_index":                          strconv.Itoa(report.StartIndex),
-		"temporary_contact_key_bytes":          report.TemporaryContactKeyBytes,
-		"timestamp":                            report.Timestamp,
-	})
+	_, err := ctx.FirestoreClient().Collection(reportCollection).Doc(u1.String()).Create(ctx, mReport)
 	if err != nil {
 		fmt.Println(err)
 	}

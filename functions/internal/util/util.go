@@ -29,12 +29,12 @@ type Context struct {
 
 // Report is a shit thing
 type Report struct {
-	EndIndex                         int    `json:"end_index"`
+	EndIndex                         string `json:"end_index"`
 	MemoData                         string `json:"memo_data"`
-	MemoType                         int    `json:"memo_type"`
+	MemoType                         string `json:"memo_type"`
 	ReportVerificationPublicKeyBytes string `json:"report_verification_public_key_bytes"`
 	SignatureBytes                   string `json:"signature_bytes"`
-	StartIndex                       int    `json:"start_index"`
+	StartIndex                       string `json:"start_index"`
 	TemporaryContactKeyBytes         string `json:"temporary_contact_key_bytes"`
 	Timestamp                        string `json:"timestamp"`
 }

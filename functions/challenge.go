@@ -1,6 +1,7 @@
 package functions
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -38,19 +39,34 @@ func submitReportHandler(ctx *util.Context) util.StatusError {
 	defer ctx.HTTPRequest().Body.Close()
 	b, _ := ioutil.ReadAll(ctx.HTTPRequest().Body)
 
-	// var report2 util.Report
 	fmt.Println(b)
 	var report util.Report
 	json.Unmarshal(b, &report)
 
-	// err := json.NewDecoder(strings.NewReader(string(b))).Decode(&report)
-	// if err != nil {
-	// 	fmt.Println(report)
-	// }
+	eI, _ := strconv.Atoi(report.EndIndex)
+	mD, _ := base64.StdEncoding.DecodeString(report.MemoData)
+	mT, _ := strconv.Atoi(report.MemoType)
+	rB, _ := base64.StdEncoding.DecodeString(report.ReportVerificationPublicKeyBytes)
+	sB, _ := base64.StdEncoding.DecodeString(report.SignatureBytes)
+	sI, _ := strconv.Atoi(report.StartIndex)
+	tB, _ := base64.StdEncoding.DecodeString(report.TemporaryContactKeyBytes)
+
 	timestamp := time.Now().Unix()
-	// report.SetTimestamp(strconv.FormatInt(timestamp, 10))
 	report.Timestamp = strconv.FormatInt(timestamp, 10)
-	pow.StoreReport(report, ctx)
+
+	mReport := map[string]interface{}{
+		"end_index":                            eI,
+		"memo_data":                            mD,
+		"memo_type":                            mT,
+		"report_verification_public_key_bytes": rB,
+		"signature_bytes":                      sB,
+		"start_index":                          sI,
+		"temporary_contact_key_bytes":          tB,
+		"timestamp":                            report.Timestamp,
+	}
+
+	// fmt.Println(mReport)
+	pow.StoreReport(report, ctx, mReport)
 
 	return nil
 }
